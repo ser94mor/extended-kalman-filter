@@ -1,6 +1,7 @@
 #ifndef KALMAN_FILTER_H_
 #define KALMAN_FILTER_H_
 #include "Eigen/Dense"
+#include "tools.h"
 
 class KalmanFilter {
 public:
@@ -71,6 +72,9 @@ private:
 
   // process noise
   static Eigen::VectorXd u_;
+
+  // tools class instance
+  static Tools tools_;
 
 };
 

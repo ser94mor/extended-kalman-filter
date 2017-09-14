@@ -3,6 +3,7 @@
 
 # build files
 build/
+cmake-build-debug/
 
 # editor config
 .vscode/
@@ -22,3 +23,11 @@ xcuserdata/
 *.xcscmblueprint
 ide_profiles/xcode/Debug/
 ide_profiles/xcode/ExtendedKF.build/
+
+# CLion
+.idea/
+        
+# other stuff
+ide_profiles/
+src/ide_profiles/
+
