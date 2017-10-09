@@ -30,6 +30,11 @@ public:
   */
   MatrixXd CalculateJacobian(const VectorXd& x_state);
 
+  /**
+   * Convert from Cartesian to Polar coordinates.
+   */
+  VectorXd ConvertFromCartesianToPolarCoords(const VectorXd &v_cart);
+
 };
 
 #endif /* TOOLS_H_ */

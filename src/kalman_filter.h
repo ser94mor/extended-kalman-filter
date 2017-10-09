@@ -21,8 +21,11 @@ public:
   // measurement matrix
   Eigen::MatrixXd H_;
 
-  // measurement covariance matrix
-  Eigen::MatrixXd R_;
+  // measurement covariance matrix for lidar
+  Eigen::MatrixXd R_lidar_;
+
+  // measurement covariance matrix for radar
+  Eigen::MatrixXd R_radar_;
 
   /**
    * Constructor
@@ -44,12 +47,10 @@ public:
    * @param Q_in Process covariance matrix
    */
   void Init(Eigen::VectorXd &x_in, Eigen::MatrixXd &P_in, Eigen::MatrixXd &F_in,
-      Eigen::MatrixXd &H_in, Eigen::MatrixXd &R_in, Eigen::MatrixXd &Q_in);
+      Eigen::MatrixXd &H_in, Eigen::MatrixXd &R_lidar_in, Eigen::MatrixXd &R_radar_in, Eigen::MatrixXd &Q_in);
 
   /**
-   * Prediction Predicts the state and the state covariance
-   * using the process model
-   * @param delta_T Time between k and k+1 in s
+   * Predicts the state and the state covariance using the process model.
    */
   void Predict();
 
@@ -60,18 +61,24 @@ public:
   void Update(const Eigen::VectorXd &z);
 
   /**
-   * Updates the state by using Extended Kalman Filter equations
+   * Updates the state by using Extended Kalman Filter equations.
    * @param z The measurement at k+1
    */
   void UpdateEKF(const Eigen::VectorXd &z);
 
 private:
 
+  /**
+   * Method implementing a common part between Update() and UpdateEKF() methods.
+   * @param z       the measurement at k+1
+   * @param H       either measurement matrix (for lidar) or Jacobian (for radar)
+   * @param R       measurement covariance matrix
+   * @param is_ekf  boolean indication whether to use equations for EKF or not
+   */
+  void UpdateCommon(const VectorXd &z, const MatrixXd &H, const MatrixXd &R, bool is_ekf);
+
   // identity matrix
   static Eigen::MatrixXd I_;
-
-  // process noise
-  static Eigen::VectorXd u_;
 
   // tools class instance
   static Tools tools_;

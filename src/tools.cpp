@@ -71,3 +71,27 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
   return Hj;
 }
+
+VectorXd Tools::ConvertFromCartesianToPolarCoords(const VectorXd &v_cart){
+  const double & px = v_cart(0);
+  const double & py = v_cart(1);
+  const double & vx = v_cart(2);
+  const double & vy = v_cart(3);
+
+  double rho, phi, rho_dot;
+  rho = sqrt(px*px + py*py);
+  phi = atan2(py, px);
+
+  // protection from division by zero
+  if (rho < 0.000001) {
+    rho = 0.000001;
+  }
+
+  rho_dot = (px * vx + py * vy) / rho;
+
+  VectorXd v_polar = VectorXd(3);
+  v_polar << rho, phi, rho_dot;
+
+  return v_polar;
+
+}
