@@ -98,7 +98,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
          0, 0, 0, 1;
 
     // process covariance matrix (initially Δt is 0, hence Q consists of 0's;
-    //                            Eigen initializes matices with 0's by default)
+    //                            Eigen initializes matrices with 0's by default)
     MatrixXd Q(4, 4);
 
     ekf_.Init(x, P, F, H_laser_, R_laser_, R_radar_, Q);
